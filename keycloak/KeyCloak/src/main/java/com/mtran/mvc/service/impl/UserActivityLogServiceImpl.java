@@ -4,7 +4,7 @@ package com.mtran.mvc.service.impl;
 import com.mtran.mvc.entity.UserActivityLog;
 import com.mtran.mvc.repository.UserActivityLogRepository;
 import com.mtran.mvc.service.UserActivityLogService;
-import com.mtran.mvc.support.ActivityType;
+import com.mtran.common.support.ActivityType;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

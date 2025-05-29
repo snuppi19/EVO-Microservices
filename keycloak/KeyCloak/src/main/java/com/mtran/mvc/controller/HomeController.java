@@ -7,7 +7,7 @@ import com.mtran.mvc.dto.response.UserResponse;
 import com.mtran.mvc.service.impl.UserKeycloakServiceImpl;
 import com.mtran.mvc.service.impl.UserActivityLogServiceImpl;
 import com.mtran.mvc.service.impl.UserIamServiceImpl;
-import com.mtran.mvc.support.ActivityType;
+import com.mtran.common.support.ActivityType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
