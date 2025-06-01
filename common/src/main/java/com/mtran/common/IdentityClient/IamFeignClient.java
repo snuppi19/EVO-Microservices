@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.Collections;
 import java.util.List;
 
-@FeignClient(name = "iam-service", url = "${iam.service.url}",configuration = FeignClientInterceptor.class)
+@FeignClient(name = "iam-service", url = "http://localhost:8080/api/users",configuration = FeignClientInterceptor.class)
 public interface IamFeignClient {
     @GetMapping("/{keycloakId}")
     @CircuitBreaker(name = "iamCircuitBreaker", fallbackMethod = "fallbackGetUser")
