@@ -6,6 +6,7 @@ Microservice-EVO
 2. STORAGE SERVICE - Service nghiệp vụ, dùng để thực hiện 1 số chức năng liên quan đến ảnh, fileEntity của người dùng 
 ---
 1 số điểm lưu ý :
+  + Triển khai theo cơ chế ddd, có sử dụng azura keyvault để bảo mật key secret
   + Sử dụng SpringBoot, Spring Eureka, Spring Security
   + Sử dụng PostgresSQL, Redis , Keycloak
   + Triển khai cơ chế các Service gọi nhau bằng Restemplate/ FeignClient
