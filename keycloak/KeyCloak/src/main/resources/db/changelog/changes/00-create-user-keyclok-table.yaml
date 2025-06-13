@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20250612152500-1 # ID độc đáo
+      author: mtran
+      changes:
+        - createTable:
+            tableName: user_keyclok
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: keycloak_id
+                  type: VARCHAR(255) # Kiểu mặc định cho String nếu không có columnDefinition
+                  constraints:
+                    nullable: true
+              - column:
+                  name: email
+                  type: VARCHAR(100) # Đúng như columnDefinition
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: VARCHAR(100) # Đúng như columnDefinition
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(100) # Đúng như columnDefinition
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phonenumber
+                  type: VARCHAR(15) # Đúng như columnDefinition
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_change_password
+                  type: TIMESTAMP # Hoặc TIMESTAMP WITH TIME ZONE tùy database và nhu cầu của bạn
+                  constraints:
+                    nullable: true
+              - column:
+                  name: password_synced
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: BOOLEAN
+                  defaultValueBoolean: false # Đặt giá trị mặc định để phù hợp với @Where và @SQLDelete
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true # createdBy/updatedBy thường có thể null
+              - column:
+                  name: created_at
+                  type: TIMESTAMP # Hoặc TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: true # createdDate/updatedDate thường có thể null
+              - column:
+                  name: updated_by
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP # Hoặc TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: true

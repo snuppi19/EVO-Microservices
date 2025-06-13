@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20250612152000-4
+      author: mtran
+      changes:
+        - createTable:
+            tableName: user_role
+            columns:
+              - column:
+                  name: user_role_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: INT
+                  constraints:
+                    nullable: false
+              # Thêm khóa ngoại cho role_id
+              - addForeignKeyConstraint:
+                  baseTableName: user_role
+                  baseColumnNames: role_id
+                  referencedTableName: role
+                  referencedColumnNames: role_id
+                  constraintName: fk_user_role_role

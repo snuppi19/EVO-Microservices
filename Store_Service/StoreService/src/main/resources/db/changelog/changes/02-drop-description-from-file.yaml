@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: 2
-      author: mtran
-      changes:
-        - dropColumn:
-            tableName: file
-            columnName: description
-      comment: Drop 'description' column from 'file' table

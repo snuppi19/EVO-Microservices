@@ -1,0 +1,240 @@
+services:
+  # Database phải khởi động đầu tiên
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: KeyCloak_Fake,StorageService
+      POSTGRES_USER: ${db_username}
+      POSTGRES_PASSWORD: ${db_password}
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - micro-net
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${db_username}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis khởi động song song với Postgres
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - micro-net
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Keycloak khởi động sau khi Postgres sẵn sàng
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.4
+    container_name: keycloak
+    command: start-dev
+    ports:
+      - "8081:8080"
+    env_file:
+      - .env
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/KeyCloak_Fake
+      KC_DB_USERNAME: ${db_username}
+      KC_DB_PASSWORD: ${db_password}
+      KC_DB_SCHEMA: public
+      KC_HTTP_PORT: 8080
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+      KC_TRANSACTION_XA_ENABLED: false
+      KC_LOG_LEVEL: INFO
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+    networks:
+      - micro-net
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8080/health/ready || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  # Eureka service khởi động song song với Keycloak
+  eureka-service:
+    build:
+      context: ./Eureka_Service
+    container_name: eureka-service
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_APPLICATION_NAME: eureka-service
+      SERVER_PORT: "8761"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-service:8761/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+      EUREKA_INSTANCE_HOSTNAME: eureka-service
+      EUREKA_INSTANCE_INSTANCEID: eureka-service:8761
+    networks:
+      - micro-net
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8761/actuator/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # IAM service chờ Keycloak và Postgres sẵn sàng hoàn toàn
+  iam-service:
+    build:
+      context: ./keycloak/KeyCloak
+    container_name: iam-service
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      SPRING_APPLICATION_NAME: iam-service
+      SERVER_PORT: "8080"
+      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080
+
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-service:8761/eureka/
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/KeyCloak_Fake
+      SPRING_DATASOURCE_USERNAME: ${db_username}
+      SPRING_DATASOURCE_PASSWORD: ${db_password}
+
+      KEYCLOAK_CLIENT_ID: dev_app
+      KEYCLOAK_CLIENT_SECRET: Jm7jhzRZqdROrMpHh6nHjdGC5MbMuGmP
+
+      SPRING_CLOUD_OPENFEIGN_CLIENT_CONFIG_IDENTITY-SERVICE_URL: http://keycloak:8080
+
+      SPRING_CLOUD_AZURE_KEYVAULT_SECRET_PROPERTY_SOURCES__0__ENDPOINT: https://MTRANkeyvault.vault.azure.net/
+      SPRING_CLOUD_AZURE_KEYVAULT_SECRET_PROPERTY_SOURCES__0__ENABLED: "true"
+      SPRING_CLOUD_AZURE_CREDENTIAL_CLIENT_ID: ${AZURE_CLIENT_ID}
+      SPRING_CLOUD_AZURE_CREDENTIAL_CLIENT_SECRET: ${AZURE_CLIENT_SECRET}
+      SPRING_CLOUD_AZURE_PROFILE_TENANT_ID: ${AZURE_TENANT_ID}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+      eureka-service:
+        condition: service_healthy
+    networks:
+      - micro-net
+    restart: on-failure
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+      # Storage service
+  storage-service:
+    build:
+      context: ./Store_Service/StoreService
+    container_name: storage-service
+    ports:
+      - "8082:8082"
+    env_file:
+      - .env
+    environment:
+      SPRING_APPLICATION_NAME: storage-service
+      SERVER_PORT: "8082"
+
+      IAM_SERVICE_URL: http://iam-service:8080/api/user
+      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080
+      FILE_UPLOAD_DIR: /uploads
+
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-service:8761/eureka/
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/StorageService
+      SPRING_DATASOURCE_USERNAME: ${db_username}
+      SPRING_DATASOURCE_PASSWORD: ${db_password}
+
+      SPRING_CLOUD_AZURE_KEYVAULT_SECRET_PROPERTY_SOURCES__0__ENDPOINT: https://MTRANkeyvault.vault.azure.net/
+      SPRING_CLOUD_AZURE_KEYVAULT_SECRET_PROPERTY_SOURCES__0__ENABLED: "true"
+      SPRING_CLOUD_AZURE_CREDENTIAL_CLIENT_ID: ${AZURE_CLIENT_ID}
+      SPRING_CLOUD_AZURE_CREDENTIAL_CLIENT_SECRET: ${AZURE_CLIENT_SECRET}
+      SPRING_CLOUD_AZURE_PROFILE_TENANT_ID: ${AZURE_TENANT_ID}
+    volumes:
+      - storage-uploads:/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      eureka-service:
+        condition: service_healthy
+      iam-service:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+    networks:
+      - micro-net
+
+    # API Gateway chờ tất cả services core sẵn sàng
+  api-gateway:
+    build:
+      context: ./api-gateway
+    container_name: api-gateway
+    ports:
+      - "9090:9090"
+    env_file:
+      - .env
+    environment:
+      SPRING_APPLICATION_NAME: api-gateway
+      SERVER_PORT: "9090"
+
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-service:8761/eureka/
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "true"
+      EUREKA_INSTANCE_HOSTNAME: api-gateway
+      EUREKA_INSTANCE_INSTANCEID: api-gateway:9090
+
+      KEYCLOAK_AUTH_SERVER_URL: http://keycloak:8080
+
+      SPRING_CLOUD_AZURE_KEYVAULT_SECRET_PROPERTY_SOURCES__0__ENDPOINT: https://MTRANkeyvault.vault.azure.net/
+      SPRING_CLOUD_AZURE_KEYVAULT_SECRET_PROPERTY_SOURCES__0__ENABLED: "true"
+      SPRING_CLOUD_AZURE_CREDENTIAL_CLIENT_ID: ${AZURE_CLIENT_ID}
+      SPRING_CLOUD_AZURE_CREDENTIAL_CLIENT_SECRET: ${AZURE_CLIENT_SECRET}
+      SPRING_CLOUD_AZURE_PROFILE_TENANT_ID: ${AZURE_TENANT_ID}
+    depends_on:
+      eureka-service:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+      iam-service:
+        condition: service_healthy
+    networks:
+      - micro-net
+
+volumes:
+  storage-uploads:
+  postgres-data:
+  keycloak-data:
+  redis-data:
+
+networks:
+  micro-net:
+    driver: bridge

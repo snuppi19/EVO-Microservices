@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20250612152000-2
+      author: mtran
+      changes:
+        - createTable:
+            tableName: permission
+            columns:
+              - column:
+                  name: permission_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: resource_code
+                  type: VARCHAR(50) # Đúng như columnDefinition của bạn
+                  constraints:
+                    nullable: false
+              - column:
+                  name: scope
+                  type: VARCHAR(50) # Đúng như columnDefinition của bạn
+                  constraints:
+                    nullable: false
