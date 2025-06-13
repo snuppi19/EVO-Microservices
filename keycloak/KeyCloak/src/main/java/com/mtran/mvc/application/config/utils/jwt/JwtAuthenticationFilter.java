@@ -2,6 +2,10 @@ package com.mtran.mvc.application.config.utils.jwt;
 
 import com.mtran.mvc.infrastructure.persistance.entity.KeycloakProperties;
 import com.mtran.mvc.application.config.webconfig.CustomUserDetailService;
+<<<<<<< HEAD
+=======
+import com.mtran.mvc.service.impl.UserIamServiceImpl;
+>>>>>>> cf6e02631710f70fb58b4c7e492dacd245b27589
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,6 +28,10 @@ import java.io.IOException;
 @Setter
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
+<<<<<<< HEAD
+=======
+    private final UserIamServiceImpl userService;
+>>>>>>> cf6e02631710f70fb58b4c7e492dacd245b27589
     private final CustomUserDetailService userDetailService;
     private final KeycloakProperties keycloakProperties;
 

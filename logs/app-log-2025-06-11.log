@@ -1,0 +1,74 @@
+2025-06-11 14:16:53 INFO  com.mtran.mvc.KeyCloakApplication - Starting KeyCloakApplication using Java 22.0.2 with PID 14528 (D:\EVOTEK_PRACTICE\EVO_MiniMicroservice\keycloak\KeyCloak\target\classes started by Admin in D:\EVOTEK_PRACTICE\EVO_MiniMicroservice)
+2025-06-11 14:16:53 INFO  com.mtran.mvc.KeyCloakApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-11 14:16:53 DEBUG c.a.s.c.a.i.k.e.KeyVaultEnvironmentPostProcessor - Inserting Key Vault PropertySource. name = azure-key-vault-secret-property-source-0
+2025-06-11 14:16:55 WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2025-06-11 14:16:55 WARN  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2025-06-11 14:16:57 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-11 14:16:57 WARN  o.s.b.d.a.OptionalLiveReloadServer - Unable to start LiveReload server
+2025-06-11 14:16:59 DEBUG c.a.s.c.c.i.f.AbstractAzureHttpClientBuilderFactory - No HTTP retry properties available.
+2025-06-11 14:16:59 DEBUG c.a.s.c.c.i.c.AzureHttpProxyOptionsConverter - Proxy hostname or port is not set.
+2025-06-11 14:16:59 DEBUG c.a.s.c.c.i.f.AbstractAzureHttpClientBuilderFactory - No HTTP proxy properties available.
+2025-06-11 14:16:59 DEBUG c.a.s.c.c.i.f.AbstractAzureServiceClientBuilderFactory - No authentication credential configured for class ClientSecretCredentialBuilder.
+2025-06-11 14:16:59 DEBUG c.a.s.c.c.i.f.AbstractAzureServiceClientBuilderFactory - Will configure the default credential of type DefaultAzureCredential for ClientSecretCredentialBuilder.
+2025-06-11 14:16:59 WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-06-11 14:16:59 INFO  com.mtran.mvc.KeyCloakApplication - Started KeyCloakApplication in 8.464 seconds (process running for 8.989)
+2025-06-11 14:20:29 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=POST, PATH=/home/login, BODY=SENSITIVE DATA HIDDEN]
+2025-06-11 14:20:31 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:20:55 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=POST, PATH=/home/login, BODY=SENSITIVE DATA HIDDEN]
+2025-06-11 14:20:57 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:21:20 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=GET, PATH=/home/callback]
+2025-06-11 14:21:20 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:21:36 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=GET, PATH=/api/users/a72f6865-c180-40bc-bfd1-9a6e180f14cd]
+2025-06-11 14:21:36 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:21:36 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=GET, PATH=/api/users/a72f6865-c180-40bc-bfd1-9a6e180f14cd/roles]
+2025-06-11 14:21:36 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:21:44 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=GET, PATH=/home/user-profile/13]
+2025-06-11 14:21:44 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=GET, PATH=/api/users/a72f6865-c180-40bc-bfd1-9a6e180f14cd]
+2025-06-11 14:21:44 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:21:44 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=GET, PATH=/api/users/a72f6865-c180-40bc-bfd1-9a6e180f14cd/roles]
+2025-06-11 14:21:44 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:21:44 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:22:03 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=GET, PATH=/home/all-profiles]
+2025-06-11 14:22:03 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=GET, PATH=/api/users/a72f6865-c180-40bc-bfd1-9a6e180f14cd]
+2025-06-11 14:22:03 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:22:03 INFO  c.m.m.a.config.logging.LoggingFilter - REQUEST: [METHOD=GET, PATH=/api/users/a72f6865-c180-40bc-bfd1-9a6e180f14cd/roles]
+2025-06-11 14:22:03 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:22:03 WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2025-06-11 14:22:03 INFO  c.m.m.a.config.logging.LoggingFilter - RESPONSE: [STATUS=200]
+2025-06-11 14:22:16 WARN  c.n.d.s.t.d.RetryableEurekaHttpClient - Request execution failed with message: Connection pool shut down
+2025-06-11 14:22:16 WARN  c.n.d.s.t.d.RetryableEurekaHttpClient - Request execution failed with message: Connection pool shut down
+2025-06-11 14:22:16 ERROR c.netflix.discovery.DiscoveryClient - DiscoveryClient_IAM-SERVICE/iam-service:8080 - de-registration failedCannot execute request on any known server
+com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$2.execute(EurekaHttpClientDecorator.java:74)
+	at com.netflix.discovery.shared.transport.decorator.SessionedEurekaHttpClient.execute(SessionedEurekaHttpClient.java:77)
+	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.cancel(EurekaHttpClientDecorator.java:71)
+	at com.netflix.discovery.DiscoveryClient.unregister(DiscoveryClient.java:916)
+	at com.netflix.discovery.DiscoveryClient.shutdown(DiscoveryClient.java:892)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:457)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeDestroyMethods(InitDestroyAnnotationBeanPostProcessor.java:415)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeDestruction(InitDestroyAnnotationBeanPostProcessor.java:239)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:202)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.run(DisposableBeanAdapter.java:195)
+	at org.springframework.cloud.context.scope.GenericScope$BeanLifecycleWrapper.destroy(GenericScope.java:389)
+	at org.springframework.cloud.context.scope.GenericScope.destroy(GenericScope.java:136)
+	at org.springframework.beans.factory.support.DisposableBeanAdapter.destroy(DisposableBeanAdapter.java:211)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroyBean(DefaultSingletonBeanRegistry.java:587)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingleton(DefaultSingletonBeanRegistry.java:559)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingleton(DefaultListableBeanFactory.java:1202)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.destroySingletons(DefaultSingletonBeanRegistry.java:520)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.destroySingletons(DefaultListableBeanFactory.java:1195)
+	at org.springframework.context.support.AbstractApplicationContext.destroyBeans(AbstractApplicationContext.java:1195)
+	at org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:1156)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.doClose(ServletWebServerApplicationContext.java:174)
+	at org.springframework.context.support.AbstractApplicationContext.close(AbstractApplicationContext.java:1102)
+	at org.springframework.boot.SpringApplicationShutdownHook.closeAndWait(SpringApplicationShutdownHook.java:145)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationShutdownHook.run(SpringApplicationShutdownHook.java:114)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
